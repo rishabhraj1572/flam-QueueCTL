@@ -1,4 +1,3 @@
-````markdown
 # QueueCTL
 
 A CLI-based background job queue system in Python.  
