@@ -19,11 +19,8 @@ from worker import run_worker
 
 
 def normalize_key(k: str) -> str:
-    # allow both max-retries and max_retries
     return k.replace("-", "_")
 
-
-# ---------- command handlers ----------
 
 def cmd_enqueue(args):
     try:
@@ -79,7 +76,6 @@ def cmd_dlq(args):
 
 
 def worker_process():
-    # target for multiprocessing
     run_worker()
 
 
@@ -99,12 +95,10 @@ def cmd_worker(args):
             set_control_flag("stop_workers", "1")
 
     elif args.action == "stop":
-        # set global stop flag
         set_control_flag("stop_workers", "1")
         print("Stop flag set. Workers will exit gracefully.")
 
     elif args.action == "clear-stop":
-        # remove global stop flag so new workers will run
         conn = get_conn()
         cur = conn.cursor()
         cur.execute("DELETE FROM control WHERE key='stop_workers'")
@@ -127,7 +121,6 @@ def cmd_config(args):
         print(f"{normalize_key(args.key)} set to {args.value}")
 
 
-# ---------- main / CLI ----------
 
 def main():
     init_db()
